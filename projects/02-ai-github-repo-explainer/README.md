@@ -213,10 +213,20 @@ docker-compose up -d --build
 
 **Prerequisites:** [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.5, AWS CLI configured (`aws configure`)
 
+**GitHub Token (required for 5000 req/hr limit):**
+1. Go to your GitHub profile → Settings → Developer settings → Personal access tokens → Fine-grained tokens
+2. Click **Generate new token**
+3. Token name: `ai-github-repo-explainer`
+4. Repository access: **All repositories**
+5. Permissions: `Contents` → Read-only, `Metadata` → Read-only
+6. Generate and copy the token
+
+**Groq API Key (free):** Get at [console.groq.com](https://console.groq.com)
+
 ```bash
 cd projects/02-ai-github-repo-explainer/infra/aws/terraform
 
-# Step 1 — Create your variables file
+# Step 1 — Create your variables file (already gitignored — safe to add secrets)
 cat > terraform.tfvars <<EOF
 github_repo_url = "https://github.com/ThinkWithOps/ai-devops-systems-lab"
 github_token    = "your_github_token"
