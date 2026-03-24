@@ -88,6 +88,15 @@ Existing tools (GitHub search, grep, IDE navigation) are file-level. They don't 
       │  all-MiniLM-L6-v2    │       │  (metadata + stats)   │
       │  cosine similarity   │       └───────────────────────┘
       └──────────────────────┘
+
+Deployment (AWS):
+┌──────────────────────────────────────────────────────────────────┐
+│  AWS EC2 (t3.medium)  ←  Terraform provisioned                   │
+│  Docker Compose stack (frontend + backend + chromadb)            │
+│  ShopFlow demo app (frontend:3002 + backend:8020)                │
+│  Security group: ports 22, 3000, 3002, 8000, 8020               │
+│  IAM role + SSH key pair managed by Terraform                    │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ### Component Responsibilities
@@ -119,7 +128,9 @@ Existing tools (GitHub search, grep, IDE navigation) are file-level. They don't 
 | sentence-transformers all-MiniLM-L6-v2 | Embeddings | Free, local, CPU-compatible, 384-dim |
 | ChromaDB | Vector database | Embedded-first, easy Docker deployment |
 | GitHub REST API v3 | Repo data source | File tree, content fetch, metadata, rate limit headers |
-| Docker Compose | Local deployment | Single-command stack startup |
+| Docker Compose | Local + AWS deployment | Single-command stack startup |
+| AWS EC2 (t3.medium) | Cloud deployment | Runs full stack — enough RAM for sentence-transformers |
+| Terraform | Infrastructure as code | EC2, security group, IAM role, SSH key provisioning |
 
 ---
 
@@ -200,23 +211,51 @@ docker-compose up -d --build
 
 > Full guide: [`docs/aws-deployment.md`](docs/aws-deployment.md)
 
-```bash
-cd infra/aws/terraform
+**Prerequisites:** [Terraform](https://developer.hashicorp.com/terraform/install) >= 1.5, AWS CLI configured (`aws configure`)
 
-# Create terraform.tfvars with your repo URL, GitHub token, and Groq key
+```bash
+cd projects/02-ai-github-repo-explainer/infra/aws/terraform
+
+# Step 1 — Create your variables file
+cat > terraform.tfvars <<EOF
+github_repo_url = "https://github.com/ThinkWithOps/ai-devops-systems-lab"
+github_token    = "your_github_token"
+groq_api_key    = "your_groq_api_key"
+EOF
+
+# Step 2 — Initialise Terraform (downloads AWS provider)
 terraform init
+
+# Step 3 — Preview what will be created
+terraform plan
+
+# Step 4 — Provision the infrastructure
 terraform apply
 ```
 
-Terraform creates everything automatically: EC2 instance (`t3.medium`), security group, IAM role, and SSH key pair. The instance bootstraps itself — Docker, repo clone, and `docker-compose up -d` all run automatically on first boot.
+Terraform creates everything automatically: EC2 `t3.medium`, security group (ports 22, 3000, 3002, 8000, 8020), IAM role, and SSH key pair saved to `infra/aws/ai-github-repo-explainer.pem`. The instance bootstraps itself on first boot — Docker install, repo clone, and `docker-compose up -d` all run automatically.
 
-> **Note:** Use `t3.medium` minimum — sentence-transformers requires more than 1GB RAM.
-> **Cost warning:** `t3.medium` ~$0.047/hr. Stop or terminate when not recording.
+Wait **3–5 minutes** after `terraform apply` for the bootstrap to complete, then open the URLs from the Terraform output.
+
+> **Note:** Use `t3.medium` minimum — sentence-transformers needs more than 1GB RAM. `t2.micro` will OOM.
+> **Cost warning:** `t3.medium` ~$0.047/hr (~$1.13/day). Stop or terminate the instance when not recording.
+
+**Verify bootstrap completed:**
+```bash
+ssh -i infra/aws/ai-github-repo-explainer.pem ubuntu@<EC2_IP> \
+  "tail -20 /var/log/repo-explainer-setup.log"
+```
 
 **Update after a code push:**
 ```bash
 cd infra/aws/scripts
 ./deploy.sh    # auto-reads IP and key from Terraform outputs
+```
+
+**Tear down:**
+```bash
+cd infra/aws/terraform
+terraform destroy
 ```
 
 ---
@@ -304,10 +343,18 @@ NEXT_PUBLIC_API_URL=http://localhost:8000 npm run dev
     Dockerfile
   vectorstore/
     ingest_sample.py             # Pre-ingest demo repos (FastAPI, etc.)
+  infra/
+    aws/
+      terraform/                 # main.tf, variables.tf, outputs.tf — EC2 + security group + IAM
+      scripts/
+        setup.sh.tpl             # EC2 bootstrap — Docker, repo clone, docker-compose up
+        deploy.sh                # Pull latest code and restart stack on EC2
   docs/
     architecture.md              # Detailed architecture documentation
+    aws-deployment.md            # Step-by-step AWS EC2 deployment guide
   docker-compose.yml
   .env.example
+  .env.aws.example               # AWS environment template
   README.md
 ```
 
