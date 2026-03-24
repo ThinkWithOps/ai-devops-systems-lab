@@ -20,6 +20,7 @@
 - [Results](#results)
 - [Challenges and Learnings](#challenges-and-learnings)
 - [Installation](#installation)
+- [AWS Deployment](#deploy-to-aws-ec2)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Cleanup](#cleanup)
@@ -194,6 +195,31 @@ docker-compose up -d --build
 | Frontend (Next.js) | 3000 | Dashboard UI |
 | Backend (FastAPI) | 8000 | API + agent |
 | ChromaDB | 8001 | Vector database |
+
+### Deploy to AWS EC2
+
+> Full guide: [`docs/aws-deployment.md`](docs/aws-deployment.md)
+
+```bash
+cd infra/aws/terraform
+
+# Create terraform.tfvars with your repo URL, GitHub token, and Groq key
+terraform init
+terraform apply
+```
+
+Terraform creates everything automatically: EC2 instance (`t3.medium`), security group, IAM role, and SSH key pair. The instance bootstraps itself — Docker, repo clone, and `docker-compose up -d` all run automatically on first boot.
+
+> **Note:** Use `t3.medium` minimum — sentence-transformers requires more than 1GB RAM.
+> **Cost warning:** `t3.medium` ~$0.047/hr. Stop or terminate when not recording.
+
+**Update after a code push:**
+```bash
+cd infra/aws/scripts
+./deploy.sh    # auto-reads IP and key from Terraform outputs
+```
+
+---
 
 ### Step 2 — Ingest a Sample Repo (Optional)
 
