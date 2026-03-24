@@ -91,7 +91,7 @@ Existing tools (GitHub search, grep, IDE navigation) are file-level. They don't 
 
 Deployment (AWS):
 ┌──────────────────────────────────────────────────────────────────┐
-│  AWS EC2 (t3.medium)  ←  Terraform provisioned                   │
+│  AWS EC2 (t3.small)  ←  Terraform provisioned                   │
 │  Docker Compose stack (frontend + backend + chromadb)            │
 │  ShopFlow demo app (frontend:3002 + backend:8020)                │
 │  Security group: ports 22, 3000, 3002, 8000, 8020               │
@@ -129,7 +129,7 @@ Deployment (AWS):
 | ChromaDB | Vector database | Embedded-first, easy Docker deployment |
 | GitHub REST API v3 | Repo data source | File tree, content fetch, metadata, rate limit headers |
 | Docker Compose | Local + AWS deployment | Single-command stack startup |
-| AWS EC2 (t3.medium) | Cloud deployment | Runs full stack — enough RAM for sentence-transformers |
+| AWS EC2 (t3.small) | Cloud deployment | Runs full stack — enough RAM for sentence-transformers |
 | Terraform | Infrastructure as code | EC2, security group, IAM role, SSH key provisioning |
 
 ---
@@ -243,12 +243,12 @@ terraform plan
 terraform apply
 ```
 
-Terraform creates everything automatically: EC2 `t3.medium`, security group (ports 22, 3000, 3002, 8000, 8020), IAM role, and SSH key pair saved to `infra/aws/ai-github-repo-explainer.pem`. The instance bootstraps itself on first boot — Docker install, repo clone, and `docker-compose up -d` all run automatically.
+Terraform creates everything automatically: EC2 `t3.small`, security group (ports 22, 3000, 3002, 8000, 8020), IAM role, and SSH key pair saved to `infra/aws/ai-github-repo-explainer.pem`. The instance bootstraps itself on first boot — Docker install, repo clone, and `docker-compose up -d` all run automatically.
 
 Wait **3–5 minutes** after `terraform apply` for the bootstrap to complete, then open the URLs from the Terraform output.
 
-> **Note:** Use `t3.medium` minimum — sentence-transformers needs more than 1GB RAM. `t2.micro` will OOM.
-> **Cost warning:** `t3.medium` ~$0.047/hr (~$1.13/day). Stop or terminate the instance when not recording.
+> **Note:** Use `t3.small` minimum — sentence-transformers needs more than 1GB RAM. `t2.micro` will OOM.
+> **Cost warning:** `t3.small` ~$0.023/hr (~$0.55/day). Stop or terminate the instance when not recording.
 
 **Verify bootstrap completed:**
 ```bash
