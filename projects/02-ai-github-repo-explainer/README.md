@@ -476,6 +476,14 @@ The answer is yes, with caveats. The AI returns grounded answers with file citat
 
 ---
 
+## 📁 Documentation
+
+| Doc | Description |
+|-----|-------------|
+| [`docs/interview.md`](docs/interview.md) | Interview prep — STAR story, architecture walk, tech deep dives, and Q&A |
+
+---
+
 ## 🎬 YouTube Video
 
 **Watch the full tutorial:** [ThinkWithOps — AI GitHub Repo Explainer](https://youtube.com/@thinkwithops)
