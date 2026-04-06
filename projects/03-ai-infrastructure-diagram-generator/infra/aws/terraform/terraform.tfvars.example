@@ -1,0 +1,8 @@
+# Copy to terraform.tfvars and fill in your values
+aws_region          = "us-east-1"
+instance_type       = "t3.micro"
+project_name        = "ai-infra-diagram"
+github_repo_url     = "https://github.com/YOUR_USERNAME/ai-devops-systems-lab"
+github_token        = ""                              # leave blank if repo is public
+s3_bucket_name      = "ai-infra-diagram-YOUR_SUFFIX" # must be globally unique
+dynamodb_table_name = "infra-diagram-history"
