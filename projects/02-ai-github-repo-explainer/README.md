@@ -480,6 +480,8 @@ The answer is yes, with caveats. The AI returns grounded answers with file citat
 
 | Doc | Description |
 |-----|-------------|
+| [`docs/architecture.md`](docs/architecture.md) | Detailed architecture — component responsibilities, agent pipeline, data flow, and design decisions |
+| [`docs/aws-deployment.md`](docs/aws-deployment.md) | AWS EC2 deployment guide — Terraform setup, environment variables, redeploy, cost estimate, and cleanup |
 | [`docs/interview.md`](docs/interview.md) | Interview prep — STAR story, architecture walk, tech deep dives, and Q&A |
 
 ---
