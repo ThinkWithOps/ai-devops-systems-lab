@@ -22,6 +22,7 @@ async def get_history():
             resource_count=int(item.get("resource_count", 0)),
             providers=item.get("providers", []),
             created_at=item.get("created_at", ""),
+            image_url=item.get("image_url") or None,
         )
         for item in items
     ]
