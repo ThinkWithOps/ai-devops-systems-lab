@@ -36,7 +36,7 @@ export function DiagramViewer({ result, apiUrl }: DiagramViewerProps) {
         <h3 className="text-sm font-semibold text-white">{result.title}</h3>
         {result.image_url && (
           <a
-            href={`${apiUrl}${result.image_url}`}
+            href={result.image_url.startsWith("http") ? result.image_url : `${apiUrl}${result.image_url}`}
             download
             className="flex items-center gap-1.5 text-xs text-muted hover:text-white transition-colors"
           >
@@ -49,7 +49,7 @@ export function DiagramViewer({ result, apiUrl }: DiagramViewerProps) {
         {result.image_url ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={`${apiUrl}${result.image_url}`}
+            src={result.image_url.startsWith("http") ? result.image_url : `${apiUrl}${result.image_url}`}
             alt="Architecture Diagram"
             className="max-w-full max-h-full object-contain rounded-lg"
           />
