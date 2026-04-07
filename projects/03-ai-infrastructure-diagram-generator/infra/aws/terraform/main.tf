@@ -142,7 +142,7 @@ resource "aws_iam_role_policy" "infra_diagram_permissions" {
       {
         Sid    = "DynamoDBHistory"
         Effect = "Allow"
-        Action = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:Scan", "dynamodb:Query"]
+        Action = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:Scan", "dynamodb:Query", "dynamodb:ListTables"]
         Resource = [aws_dynamodb_table.history.arn]
       }
     ]
