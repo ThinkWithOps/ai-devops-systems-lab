@@ -59,7 +59,7 @@ data "aws_ami" "ubuntu" {
 
 resource "aws_security_group" "infra_diagram" {
   name        = "${var.project_name}-sg"
-  description = "AI Infrastructure Diagram Generator — SSH, frontend, backend"
+  description = "AI Infrastructure Diagram Generator - SSH, frontend, backend"
 
   ingress {
     description = "SSH"
