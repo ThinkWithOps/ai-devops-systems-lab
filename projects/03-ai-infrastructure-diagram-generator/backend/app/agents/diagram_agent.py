@@ -123,13 +123,11 @@ async def run_diagram_agent(
             local_path_no_ext, dot_source = generate_graphviz_diagram(
                 resources, title, settings.output_dir
             )
-            # local_path_no_ext already has .png appended by graphviz render
-            # image_url starts as the local serving path
+            # local_path_no_ext is e.g. "/output/abc123.png"
             image_url = local_path_no_ext
-            # Store the actual filesystem path for S3 upload
-            local_image_path = os.path.join(
-                settings.output_dir, f"{diagram_id}.png"
-            )
+            # Derive the actual filesystem path from the returned URL
+            filename = os.path.basename(local_path_no_ext)
+            local_image_path = os.path.join(settings.output_dir, filename)
         else:
             mermaid_code = generate_mermaid_diagram(resources, title)
 
