@@ -125,9 +125,10 @@ async def run_diagram_agent(
             )
             # local_path_no_ext is e.g. "/output/abc123.png"
             image_url = local_path_no_ext
-            # Derive the actual filesystem path from the returned URL
+            # Derive the absolute filesystem path from the returned URL
             filename = os.path.basename(local_path_no_ext)
-            local_image_path = os.path.join(settings.output_dir, filename)
+            abs_output_dir = os.path.abspath(settings.output_dir)
+            local_image_path = os.path.join(abs_output_dir, filename)
         else:
             mermaid_code = generate_mermaid_diagram(resources, title)
 
