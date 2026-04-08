@@ -18,6 +18,7 @@
 - [Demo Infrastructure (EC2 + k3s)](#demo-infrastructure-ec2--k3s)
 - [How to Install and Run](#how-to-install-and-run)
 - [How to Use](#how-to-use)
+- [Tools Reference](#tools-reference)
 - [Project Structure](#project-structure)
 - [What This Teaches](#what-this-teaches)
 - [Challenges](#challenges)
@@ -243,6 +244,44 @@ Open Claude Desktop and type in plain English. Claude will automatically call th
 - `"Restart the nginx deployment"` — rolling restart, confirms when complete
 - `"Are there any active CloudWatch alarms?"` — lists all alarms in ALARM state
 - `"Show me the Terraform plan for /opt/infra"` — runs plan, Claude explains each proposed change
+
+---
+
+## Tools Reference
+
+### Kubernetes (5 tools)
+
+| Tool | What it does |
+|------|-------------|
+| `get_pod_status` | List all pods across namespaces with status, restarts, and age |
+| `get_failing_pods` | List only pods in CrashLoopBackOff, Failed, OOMKilled, or Error state |
+| `get_pod_logs` | Fetch recent logs from a specific pod |
+| `restart_deployment` | Rolling restart a deployment by name |
+| `describe_pod` | Full pod description — events, conditions, resource limits |
+
+### AWS (4 tools)
+
+| Tool | What it does |
+|------|-------------|
+| `get_aws_cost` | Per-service cost breakdown for the current month via Cost Explorer |
+| `list_ec2_instances` | List all EC2 instances with state, type, and public IP |
+| `get_cloudwatch_alarms` | List all CloudWatch alarms currently in ALARM state |
+| `list_s3_buckets` | List all S3 buckets with region and creation date |
+
+### Docker (3 tools)
+
+| Tool | What it does |
+|------|-------------|
+| `list_containers` | List all running containers with status and ports |
+| `get_container_logs` | Fetch recent logs from a specific container |
+| `restart_container` | Restart a container by name |
+
+### Terraform (2 tools)
+
+| Tool | What it does |
+|------|-------------|
+| `run_terraform_plan` | Run `terraform plan` in a given directory, Claude explains the changes |
+| `check_terraform_state` | List all resources currently tracked in Terraform state |
 
 ---
 
