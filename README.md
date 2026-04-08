@@ -27,57 +27,9 @@ Built with a local-first philosophy: everything runs on your machine with free t
 
 ---
 
-## Standard Tech Stack
-
-Every project is built on the same foundation:
-
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 14, React, Tailwind CSS |
-| Backend | FastAPI, Python 3.11+ |
-| AI Orchestration | LangChain, LangGraph, AutoGen |
-| LLM | Groq (default), Ollama (local), OpenAI (optional) |
-| Vector DB | ChromaDB, Weaviate, Pinecone |
-| Deployment | Docker Compose, EC2 (optional) |
-| Observability | Prometheus, Grafana |
-| Cloud | AWS (optional — S3, DynamoDB, Bedrock) |
-
----
-
 ## How to Run Any Project
 
-Each project folder contains its own `README.md` with full setup instructions. The standard local setup is:
-
-```bash
-cd projects/01-ai-devops-copilot
-cp .env.example .env
-# Add your GROQ_API_KEY to .env
-docker-compose up --build
-```
-
-Then open `http://localhost:3000`.
-
----
-
-## Repository Structure
-
-```
-ai-devops-systems-lab/
-└── projects/
-    ├── 01-ai-devops-copilot/
-    ├── 02-ai-github-repo-explainer/
-    ├── 03-ai-infrastructure-diagram-generator/
-    └── ...
-```
-
----
-
-## Local-First Philosophy
-
-- Every project runs without AWS credentials
-- Groq free tier is the default LLM
-- AWS is optional — add it when it improves demo realism
-- No project requires a paid subscription to run locally
+Each project has its own `README.md` with setup instructions — stack and steps vary per project.
 
 ---
 

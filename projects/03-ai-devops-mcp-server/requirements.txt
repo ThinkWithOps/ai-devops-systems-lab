@@ -1,0 +1,14 @@
+# MCP server runtime
+mcp>=1.0.0
+
+# Kubernetes client
+kubernetes>=29.0.0
+
+# AWS SDK
+boto3>=1.34.0
+
+# Docker SDK
+docker>=7.0.0
+
+# Testing
+pytest>=8.0.0

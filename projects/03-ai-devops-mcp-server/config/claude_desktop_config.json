@@ -1,0 +1,24 @@
+{
+  "_comment": "Add the 'mcpServers' block below into your Claude Desktop config file.",
+  "_config_file_locations": {
+    "macOS": "~/Library/Application Support/Claude/claude_desktop_config.json",
+    "windows": "%APPDATA%\\Claude\\claude_desktop_config.json",
+    "linux": "~/.config/Claude/claude_desktop_config.json"
+  },
+
+  "mcpServers": {
+    "ai-devops": {
+      "command": "python",
+      "args": [
+        "/ABSOLUTE/PATH/TO/projects/03-ai-devops-mcp-server/src/server.py"
+      ],
+      "env": {
+        "KUBE_MOCK_MODE": "false",
+        "AWS_DEFAULT_REGION": "us-east-1",
+        "KUBECONFIG": "C:\\Users\\YOUR_USERNAME\\.kube\\mcp-demo-config",
+        "DOCKER_HOST": "tcp://<EC2_IP>:2375",
+        "TERRAFORM_ALLOWED_DIRS": "/home/ubuntu/terraform,/opt/infra"
+      }
+    }
+  }
+}
