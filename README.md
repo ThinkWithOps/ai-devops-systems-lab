@@ -23,34 +23,7 @@ Built with a local-first philosophy: everything runs on your machine with free t
 |---|---------|---------------|-------|--------|
 | 01 | [AI DevOps Copilot](projects/01-ai-devops-copilot) | I Built ChatGPT for DevOps Engineers | Next.js · FastAPI · LangChain · Groq · ChromaDB | ✅ Done |
 | 02 | [AI GitHub Repo Explainer](projects/02-ai-github-repo-explainer) | This AI Understands Any GitHub Repository | React · FastAPI · LangChain · ChromaDB · GitHub API | ✅ Done |
-| 03 | [AI Infrastructure Diagram Generator](projects/03-ai-infrastructure-diagram-generator) | AI Turns Terraform Code Into Architecture Diagrams | Next.js · FastAPI · Graphviz · LangChain · Groq | ✅ Done |
-| 04 | AI DevOps Runbook RAG Assistant | I Made Our 500-Page DevOps Runbook Searchable With AI | Next.js · FastAPI · LangChain RAG · ChromaDB · Redis | 🔜 Planned |
-| 05 | AI DevOps ChatOps Bot | I Put an AI DevOps Engineer Inside Slack | Slack API · FastAPI · LangChain · Redis · Ollama | 🔜 Planned |
-| 06 | AI Cloud Cost Optimization Agent | This AI Saved Me $900 on AWS | React · FastAPI · boto3 · LangChain · PostgreSQL | 🔜 Planned |
-| 07 | AI Kubernetes Cost Analyzer | AI That Finds Hidden Kubernetes Costs | React · FastAPI · Kubernetes Metrics API · Prometheus | 🔜 Planned |
-| 08 | AI Infrastructure Drift Detector | This AI Detects Hidden Infrastructure Changes | FastAPI · Terraform State Parser · AWS SDK · LangChain | 🔜 Planned |
-| 09 | AI DevOps CLI Engineer | I Built an AI DevOps Engineer for My Terminal | Python CLI · Next.js · FastAPI · LangChain · Kubernetes API | 🔜 Planned |
-| 10 | AI Codebase Knowledge Engine | AI That Understands My Entire Codebase | Next.js · FastAPI · LangChain RAG · ChromaDB · GitHub API | 🔜 Planned |
-| 11 | AI DevOps Monitoring Assistant | This AI Explains Monitoring Alerts Instantly | React · FastAPI · Prometheus API · Grafana API · LangChain | 🔜 Planned |
-| 12 | AI DevOps Learning Assistant | AI That Teaches DevOps From Real Systems | Next.js · FastAPI · LangChain RAG · ChromaDB · HuggingFace | 🔜 Planned |
-| 13 | AI Kubernetes Fix Bot | This AI Fixes Broken Kubernetes Pods Automatically | Python · FastAPI · Kubernetes Python Client · Ollama · React | 🔜 Planned |
-| 14 | AI DevOps ChatOps Agent | I Built a DevOps ChatGPT That Runs Commands For Me | FastAPI · Slack API · LangChain · Ollama · Redis | 🔜 Planned |
-| 15 | AI CI/CD Failure Predictor | This AI Predicts Pipeline Failures Before They Happen | Python · FastAPI · Scikit-learn · GitHub Actions API · React | 🔜 Planned |
-| 16 | AI Terraform Drift Detector | This AI Finds Infrastructure Drift Instantly | Terraform CLI · Python · FastAPI · AWS SDK · React | 🔜 Planned |
-| 17 | AI Service Health Explainer | This AI Explains Why Your Service Is Down | FastAPI · Prometheus API · Grafana API · LangChain · React | 🔜 Planned |
-| 18 | AI DevOps Command Generator | This AI Writes DevOps Commands For You | FastAPI · Ollama · LangChain · CLI + React UI | 🔜 Planned |
-| 19 | AI Deployment Risk Analyzer | This AI Warns You Before a Bad Deployment | Python · FastAPI · GitHub API · Scoring Logic · React | 🔜 Planned |
-| 20 | AI Incident Investigation Platform | AI That Investigates Production Outages | React · FastAPI · LangGraph · Prometheus · Elasticsearch | 🔜 Planned |
-| 21 | AI Infrastructure Architect | I Let AI Design My Entire Cloud Architecture | React · FastAPI · LangChain · Terraform Parser · AWS SDK | 🔜 Planned |
-| 22 | AI DevOps Task Automation Agent | I Let AI Run My DevOps Job for a Day | LangGraph · FastAPI · Next.js · Docker Sandbox | 🔜 Planned |
-| 23 | AI Deployment Planning Assistant | AI That Plans Production Deployments | React · FastAPI · LangChain · PostgreSQL | 🔜 Planned |
-| 24 | AI Debugging Pair Programmer | I Let AI Debug My Production Code | React · FastAPI · LangChain · GitHub API · Ollama | 🔜 Planned |
-| 25 | AI DevOps Observability Engine | I Built an AI Observability Platform | Next.js · FastAPI · Prometheus · Grafana · LangChain | 🔜 Planned |
-| 26 | AI Cloud Architecture Optimizer | AI That Optimizes Cloud Architecture | React · FastAPI · Terraform Parser · AWS SDK · LangChain | 🔜 Planned |
-| 27 | AI DevOps Documentation Generator | AI Writes DevOps Documentation Automatically | Next.js · FastAPI · LangChain · Markdown Parser | 🔜 Planned |
-| 28 | AI Deployment Risk Predictor | This AI Predicts If Your Deployment Will Fail | Next.js · FastAPI · Scikit-learn · LangChain · GitHub API | 🔜 Planned |
-| 29 | AI CI/CD Pipeline Debugger | This AI Debugs Broken CI Pipelines Automatically | Next.js · FastAPI · LangChain · GitHub Actions API · Ollama | 🔜 Planned |
-| 30 | AI DevOps Learning Assistant | AI That Teaches DevOps From Real Systems | Next.js · FastAPI · LangChain RAG · ChromaDB · HuggingFace | 🔜 Planned |
+| 03 | AI DevOps MCP Server | I Built an MCP Server That Lets Claude Control My Entire Infrastructure | Python · MCP SDK · Kubernetes Python Client · boto3 · Terraform CLI | 🔜 Next |
 
 ---
 
