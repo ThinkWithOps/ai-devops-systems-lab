@@ -39,40 +39,45 @@ No frameworks. No LangChain. No black boxes. Just Python.
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                     INGEST (automatic via S3)                    │
-│                                                                  │
-│  Upload .md to S3 docs/                                          │
-│         │                                                        │
-│         ▼  (S3 trigger)                                          │
-│  Lambda (Docker)                                                 │
-│    → download doc from S3                                        │
-│    → chunk_text() (500 chars, 50 overlap)                        │
-│    → SentenceTransformer (all-MiniLM-L6-v2, 384-dim)            │
-│    → ChromaDB (stored in /tmp)                                   │
-│    → zip + upload chroma_db back to S3                           │
-└─────────────────────────────────────────────────────────────────┘
+ ── INGEST PATH (automatic) ──────────────────────────────────────────────────
 
-┌─────────────────────────────────────────────────────────────────┐
-│                     QUERY (local terminal)                       │
-│                                                                  │
-│  python src/rag_pipeline.py                                      │
-│         │                                                        │
-│         ▼                                                        │
-│  download chroma_db from S3 (if not cached locally)             │
-│         │                                                        │
-│         ▼                                                        │
-│  SentenceTransformer → query embedding                           │
-│         │                                                        │
-│         ▼                                                        │
-│  ChromaDB cosine similarity → top 3 chunks                       │
-│         │                                                        │
-│         ▼                                                        │
-│  Groq API (llama-3.3-70b) → streamed answer                     │
-│         │                                                        │
-│         ▼                                                        │
-│  Source citations → which runbook answered the question          │
-└─────────────────────────────────────────────────────────────────┘
+  You                    AWS                        Lambda (Docker)
+   │                      │                               │
+   │  aws s3 cp doc.md    │                               │
+   │─────────────────────▶│  S3 docs/ prefix              │
+   │                      │──── S3 trigger ──────────────▶│
+   │                      │                               │  chunk_text()
+   │                      │                               │  500 chars, 50 overlap
+   │                      │                               │
+   │                      │                               │  SentenceTransformer
+   │                      │                               │  all-MiniLM-L6-v2
+   │                      │                               │  → 384-dim vectors
+   │                      │                               │
+   │                      │                               │  ChromaDB (/tmp)
+   │                      │◀── upload chroma_db.zip ──────│
+   │                      │  S3 chroma_db/ prefix         │
+
+
+ ── QUERY PATH (local terminal) ─────────────────────────────────────────────
+
+  You                    Local                          AWS
+   │                      │                               │
+   │  ask a question       │                               │
+   │─────────────────────▶│                               │
+   │                      │  chroma_db not local?         │
+   │                      │──── download chroma_db.zip ──▶│
+   │                      │◀── S3 chroma_db/ ─────────────│
+   │                      │                               │
+   │                      │  SentenceTransformer          │
+   │                      │  → query embedding            │
+   │                      │                               │
+   │                      │  ChromaDB cosine similarity   │
+   │                      │  → top 3 chunks + scores      │
+   │                      │                               │
+   │                      │  Groq API (llama-3.3-70b)     │
+   │                      │  → streamed answer            │
+   │                      │                               │
+   │◀─ answer + sources ──│                               │
 ```
 
 ---
