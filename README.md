@@ -1,10 +1,9 @@
 # AI DevOps Systems Lab
 
-> 30 portfolio-grade AI + DevOps projects — built for engineers, shipped as a YouTube series.
+> Portfolio-grade AI + DevOps projects — built for engineers, shipped as a YouTube series.
 
 [![Channel](https://img.shields.io/badge/YouTube-ThinkWithOps-red?logo=youtube)](https://youtube.com/@ThinkWithOps)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Projects](https://img.shields.io/badge/Projects-30-brightgreen)
 ![Stack](https://img.shields.io/badge/Stack-Python%20%7C%20AWS%20%7C%20Kubernetes%20%7C%20AI-informational)
 
 ---
