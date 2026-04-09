@@ -1,0 +1,3 @@
+region       = "us-east-1"
+project_name = "rag-demo"
+ecr_image_uri = ""   # Fill in after: docker build + push to ECR

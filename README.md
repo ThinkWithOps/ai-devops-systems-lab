@@ -21,6 +21,7 @@ A series of 30 real AI + DevOps projects — each one a GitHub-ready portfolio p
 | 01 | [AI DevOps Copilot](projects/01-ai-devops-copilot) | I Built ChatGPT for DevOps Engineers | Next.js · FastAPI · LangChain · Groq · ChromaDB | ✅ Done |
 | 02 | [AI GitHub Repo Explainer](projects/02-ai-github-repo-explainer) | This AI Understands Any GitHub Repository | React · FastAPI · LangChain · ChromaDB · GitHub API | ✅ Done |
 | 03 | [AI DevOps MCP Server](projects/03-ai-devops-mcp-server) | [I Gave Claude AI Full Control of My Infrastructure. It Found a Crash in 10 Seconds.](https://youtu.be/2XsNcKSa28s) | Python · MCP SDK · Kubernetes · boto3 · Docker · Terraform | ✅ Done |
+| 04 | [RAG from Scratch](projects/04-rag-from-scratch) | I Built RAG from Scratch in Python — No LangChain, No Frameworks, Just Code | Python · sentence-transformers · ChromaDB · Ollama · Rich | 🔜 Next |
 
 ---
 
