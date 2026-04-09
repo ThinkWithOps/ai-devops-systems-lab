@@ -5,15 +5,13 @@
 [![Channel](https://img.shields.io/badge/YouTube-ThinkWithOps-red?logo=youtube)](https://youtube.com/@ThinkWithOps)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![Projects](https://img.shields.io/badge/Projects-30-brightgreen)
-![Stack](https://img.shields.io/badge/Stack-Next.js%20%7C%20FastAPI%20%7C%20LangChain%20%7C%20Docker-informational)
+![Stack](https://img.shields.io/badge/Stack-Python%20%7C%20AWS%20%7C%20Kubernetes%20%7C%20AI-informational)
 
 ---
 
 ## What This Is
 
-A series of 30 fully working AI + DevOps platforms — each one a GitHub-ready portfolio project with a matching YouTube video. Every project ships with a frontend dashboard, FastAPI backend, AI agent layer, vector database, Docker deployment, and optional AWS integration.
-
-Built with a local-first philosophy: everything runs on your machine with free tools. AWS is an optional realism layer, not a requirement.
+A series of 30 real AI + DevOps projects — each one a GitHub-ready portfolio project with a matching YouTube video. Every project solves a real DevOps problem using AI. Stack varies per project — some are full-stack platforms, some are lightweight Python tools, some are MCP servers. Each has its own README with setup instructions.
 
 ---
 
@@ -23,7 +21,7 @@ Built with a local-first philosophy: everything runs on your machine with free t
 |---|---------|---------------|-------|--------|
 | 01 | [AI DevOps Copilot](projects/01-ai-devops-copilot) | I Built ChatGPT for DevOps Engineers | Next.js · FastAPI · LangChain · Groq · ChromaDB | ✅ Done |
 | 02 | [AI GitHub Repo Explainer](projects/02-ai-github-repo-explainer) | This AI Understands Any GitHub Repository | React · FastAPI · LangChain · ChromaDB · GitHub API | ✅ Done |
-| 03 | AI DevOps MCP Server | I Built an MCP Server That Lets Claude Control My Entire Infrastructure | Python · MCP SDK · Kubernetes Python Client · boto3 · Terraform CLI | 🔜 Next |
+| 03 | [AI DevOps MCP Server](projects/03-ai-devops-mcp-server) | [I Gave Claude AI Full Control of My Infrastructure. It Found a Crash in 10 Seconds.](https://youtu.be/2XsNcKSa28s) | Python · MCP SDK · Kubernetes · boto3 · Docker · Terraform | ✅ Done |
 
 ---
 

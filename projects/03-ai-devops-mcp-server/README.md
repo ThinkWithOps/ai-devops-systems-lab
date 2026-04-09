@@ -6,7 +6,7 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-purple.svg)](https://modelcontextprotocol.io)
 
-**YouTube Tutorial:** *(coming soon — [@ThinkWithOps](https://youtube.com/@thinkwithops))*
+**YouTube Tutorial:** [I Gave Claude AI Full Control of My Infrastructure. It Found a Crash in 10 Seconds.](https://youtu.be/2XsNcKSa28s) — [@ThinkWithOps](https://youtube.com/@thinkwithops)
 
 ---
 
@@ -167,18 +167,14 @@ Each tool falls back to mock data gracefully if the service isn't available.
 # 1. Navigate to the project
 cd projects/03-ai-devops-mcp-server
 
-# 2. Create and activate a virtual environment
-python -m venv .venv
-source .venv/bin/activate      # Windows: .venv\Scripts\activate
-
-# 3. Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-# 4. Set up environment variables
+# 3. Set up environment variables
 cp .env.example .env
 # Edit .env — set AWS_DEFAULT_REGION, KUBE_MOCK_MODE, etc.
 
-# 5. Run the tests to verify everything works (no real infra needed)
+# 4. Run the tests to verify everything works (no real infra needed)
 KUBE_MOCK_MODE=true pytest tests/ -v
 ```
 
