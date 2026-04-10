@@ -134,62 +134,92 @@ S3 is the shared layer between Lambda and your local machine. Lambda writes the 
 | Terraform | Provision AWS infra |
 | Groq API key | LLM inference — free at [console.groq.com](https://console.groq.com) |
 
-### Steps
+### Step 1 — Install dependencies
 
 ```bash
-# 1. Navigate to the project
 cd projects/04-rag-from-scratch
-
-# 2. Install dependencies
 pip install -r requirements.txt
-
-# 3. Set up environment variables
-cp .env.example .env
-# Edit .env — add GROQ_API_KEY and AWS region
 ```
 
-### Deploy AWS Infrastructure
+### Step 2 — Get your Groq API key
+
+1. Go to [console.groq.com](https://console.groq.com) → sign up (free) → create an API key
+2. Set up environment variables:
 
 ```bash
-# Step 1 — provision S3 + ECR
+cp .env.example .env
+# Edit .env — add GROQ_API_KEY and AWS_DEFAULT_REGION
+# Leave CHROMA_S3_BUCKET blank for now — fill in after terraform apply
+```
+
+### Step 3 — Deploy S3 + ECR (first pass)
+
+```bash
 cd infra/terraform
 cp terraform.tfvars.example terraform.tfvars
-# Edit terraform.tfvars — set region and project_name, leave ecr_image_uri blank for now
+# Edit terraform.tfvars — set region and project_name, leave ecr_image_uri blank
+
 terraform init
 terraform apply -target=aws_s3_bucket.rag -target=aws_ecr_repository.rag_lambda
+```
 
-# Step 2 — build and push Lambda Docker image
+### Step 4 — Build and push the Lambda Docker image
+
+```bash
 ECR_URL=$(terraform output -raw ecr_repository_url)
-aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_URL
+
+# Login to ECR
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_URL
+
+# Build and push
 docker build -t rag-ingest ../../lambda/
 docker tag rag-ingest:latest $ECR_URL:latest
 docker push $ECR_URL:latest
+```
 
-# Step 3 — set ECR image URI and apply the rest
-# Edit terraform.tfvars — set ecr_image_uri to the ECR URL above
+### Step 5 — Deploy the rest of the infrastructure
+
+```bash
+# Edit terraform.tfvars — set ecr_image_uri to the ECR URL from above
 terraform apply
 
-# Step 4 — copy bucket name to .env
+# Get the bucket name and add to .env
 terraform output s3_bucket_name
 # Add to .env: CHROMA_S3_BUCKET=<bucket-name>
 ```
 
-### Upload Docs and Trigger Ingest
+### Step 6 — Load environment variables
 
 ```bash
-# Upload a runbook — this automatically triggers Lambda
-aws s3 cp docs/runbook-kubernetes.md s3://$CHROMA_S3_BUCKET/docs/runbook-kubernetes.md
-aws s3 cp docs/runbook-docker.md s3://$CHROMA_S3_BUCKET/docs/runbook-docker.md
-aws s3 cp docs/runbook-cicd.md s3://$CHROMA_S3_BUCKET/docs/runbook-cicd.md
+cd ../..    # back to project root
+export $(cat .env | grep -v '#' | xargs)
+```
 
-# Watch Lambda logs to confirm ingestion
+### Step 7 — Start the file watcher
+
+```bash
+python src/sync_docs.py
+```
+
+This uploads the 3 existing runbooks in `docs/` to S3 immediately and then watches for any new files you drop in. Lambda triggers automatically for each upload.
+
+### Step 8 — Watch Lambda logs (optional, confirm it worked)
+
+```bash
 aws logs tail /aws/lambda/rag-demo-ingest --follow
 ```
 
-### Ask Questions
+### Step 9 — Ask questions
 
 ```bash
 python src/rag_pipeline.py
+```
+
+### Step 10 — Destroy when done
+
+```bash
+cd infra/terraform
+terraform destroy
 ```
 
 ---
