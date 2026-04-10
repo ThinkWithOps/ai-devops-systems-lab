@@ -82,8 +82,9 @@ No frameworks. No LangChain. No black boxes. Just Python.
 
 ### How it works — Ingest Path
 
-1. You upload any `.md` or `.txt` file to the `docs/` prefix of your S3 bucket
-2. S3 fires an event trigger automatically — no manual command needed
+1. Run `python src/sync_docs.py` once — it watches your local `docs/` folder
+2. Drop any `.md` or `.txt` file into `docs/` — the watcher auto-uploads it to S3
+3. S3 fires an event trigger automatically — no further manual command needed
 3. AWS Lambda (Docker-based) receives the trigger and downloads the file
 4. Lambda chunks the text into 500-character overlapping pieces using a sliding window
 5. Each chunk is converted into a 384-dimensional vector using `sentence-transformers` (all-MiniLM-L6-v2) — this turns text into numbers that represent meaning
@@ -195,10 +196,12 @@ python src/rag_pipeline.py
 
 ## How to Use
 
-**Upload a doc → Lambda ingests it automatically:**
+**Start the file watcher — drop files in docs/, everything else is automatic:**
 ```bash
-aws s3 cp my-runbook.md s3://$CHROMA_S3_BUCKET/docs/my-runbook.md
+python src/sync_docs.py
 ```
+
+This watches the `docs/` folder. Any `.md` or `.txt` file you add or update is automatically uploaded to S3, which triggers Lambda to ingest it. No manual `aws s3 cp` needed.
 
 **Ask questions locally:**
 ```bash
@@ -222,6 +225,7 @@ python src/rag_pipeline.py "What should I do when a pod is in CrashLoopBackOff?"
 
 | Script | What it does |
 |--------|-------------|
+| `src/sync_docs.py` | Watch docs/ folder, auto-upload new/changed files to S3 |
 | `src/ingest.py` | Local ingest (no Lambda) — for testing without AWS |
 | `src/retriever.py` | Query ChromaDB (downloads from S3 if needed) |
 | `src/generator.py` | Send question + context to Groq, stream response |
@@ -237,6 +241,7 @@ python src/rag_pipeline.py "What should I do when a pod is in CrashLoopBackOff?"
 ```
 04-rag-from-scratch/
 ├── src/
+│   ├── sync_docs.py           # Watch docs/ and auto-upload to S3
 │   ├── ingest.py              # Local ingest — testing without Lambda
 │   ├── retriever.py           # Cosine similarity search, S3 download
 │   ├── generator.py           # Groq API streaming
