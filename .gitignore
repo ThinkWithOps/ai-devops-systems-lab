@@ -1,0 +1,35 @@
+.claude/
+.claude-demoapps/
+.claude-aws/
+.claude-nontechnical/
+.claude-templates/
+claude-templates/
+WORKFLOW.md
+CLAUDE.md
+devops-copilot_accessKeys.csv
+
+# Secrets — never commit
+**/.env
+**/*.pem
+**/secrets.tfvars
+**/terraform.tfvars
+
+# Terraform
+**/.terraform/
+**/*.tfstate
+**/*.tfstate.backup
+**/.terraform.lock.hcl
+
+**/.terraform/
+*.tfvars
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+.env
+.env.*
+!.env.example
+
+# Local-only notes and guides — not pushed to repo
+_local/
+_study/
