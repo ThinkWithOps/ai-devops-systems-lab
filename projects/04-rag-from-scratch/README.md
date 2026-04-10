@@ -80,6 +80,31 @@ No frameworks. No LangChain. No black boxes. Just Python.
    │◀─ answer + sources ──│                               │
 ```
 
+### How it works — Ingest Path
+
+1. You upload any `.md` or `.txt` file to the `docs/` prefix of your S3 bucket
+2. S3 fires an event trigger automatically — no manual command needed
+3. AWS Lambda (Docker-based) receives the trigger and downloads the file
+4. Lambda chunks the text into 500-character overlapping pieces using a sliding window
+5. Each chunk is converted into a 384-dimensional vector using `sentence-transformers` (all-MiniLM-L6-v2) — this turns text into numbers that represent meaning
+6. Vectors are stored in ChromaDB inside Lambda's `/tmp` directory
+7. Lambda zips the entire ChromaDB and uploads it back to the `chroma_db/` prefix in S3
+8. Every future upload adds to the same vector store — your knowledge base grows automatically
+
+### How it works — Query Path
+
+1. You type a question in your local terminal
+2. If ChromaDB is not cached locally, it downloads the latest zip from S3
+3. Your question is converted into a vector using the same embedding model
+4. ChromaDB runs a cosine similarity search — finds the 3 chunks most semantically similar to your question
+5. Those 3 chunks (the relevant context) + your question are sent to Groq API
+6. Groq streams the answer back token by token using `llama-3.3-70b`
+7. The answer appears with source citations — which runbook each part came from
+
+### The key design decision
+
+S3 is the shared layer between Lambda and your local machine. Lambda writes the vector store to S3. Your terminal reads it from S3. This means the knowledge base is always up to date — every time someone uploads a new runbook, Lambda processes it and the next query automatically includes that knowledge.
+
 ---
 
 ## Tech Stack
